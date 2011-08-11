@@ -20,7 +20,13 @@ if [ $1 ]
       rm -rf ./jasmine-standalone-1.1.0 ./jasmine-standalone-1.1.0.rc1 ./jasmine-standalone-1.1.0.rc1.zip
     ;;
     "create")
-      echo "create $2 coming";
+      if [ $2 ]
+        then 
+          echo "function $2 () {\n\n}" > ./src/$2.js
+          echo "describe('$2', function () {\n\n});" > ./spec/$2Spec.js
+        else
+          echo 'please add a name for the file'
+      fi
     ;;
     "open")
       echo "open coming";
