@@ -18,6 +18,10 @@ if [ $1 ]
       mv ./jasmine-standalone-1.1.0.rc1/lib/jasmine-1.1.0.rc1 ./lib/jasmine
       mv ./jasmine-standalone-1.1.0.rc1/SpecRunner.html ./SpecRunner.html
       rm -rf ./jasmine-standalone-1.1.0 ./jasmine-standalone-1.1.0.rc1 ./jasmine-standalone-1.1.0.rc1.zip
+      if [ xattr ]
+        then
+        xattr -d -r com.apple.quarantine ./SpecRunner.html
+      fi
     ;;
     "create")
       if [ $2 ]
