@@ -5,7 +5,7 @@ function help {
     echo "command: jasmine";
     echo "    init - include jasmine in the project";
     echo "    create \$FunctionName - creates ./src/FunctionName.js ./spec/FunctionNameSpec.js";
-    echo "    open - runs tests in browser";
+    echo "    run - runs tests in browser";
 }
 
 if [ $1 ] 
@@ -32,8 +32,8 @@ if [ $1 ]
           echo 'please add a name for the file'
       fi
     ;;
-    "open")
-      echo "open coming";
+    "run")
+      open ./SpecRunner.html
     ;;
     "--help")
       help;
