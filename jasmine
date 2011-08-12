@@ -45,4 +45,3 @@ if [ $1 ]
   else
     help;
 fi
-
