@@ -15,7 +15,7 @@ if [ $1 ]
       curl -O http://pivotal.github.com/jasmine/downloads/jasmine-standalone-1.1.0.rc1.zip
       unzip jasmine-standalone-1.1.0.rc1.zip
       mkdir lib spec src
-      mv ./jasmine-standalone-1.1.0.rc1/lib/jasmine-1.1.0.rc1 ./lib/jasmine
+      mv ./jasmine-standalone-1.1.0.rc1/lib/jasmine-1.1.0.rc1 ./lib
       mv ./jasmine-standalone-1.1.0.rc1/SpecRunner.html ./SpecRunner.html
       rm -rf ./jasmine-standalone-1.1.0 ./jasmine-standalone-1.1.0.rc1 ./jasmine-standalone-1.1.0.rc1.zip
       if [ xattr ]
