@@ -2,10 +2,10 @@
 
 function help {
     echo "jasmine - a few commands to help you includes the jasmine JavaScript testing library in your project";
-    echo "command: jasmine";
-    echo "    init - include jasmine in the project";
-    echo "    create \$FunctionName - creates ./src/FunctionName.js ./spec/FunctionNameSpec.js";
-    echo "    run - runs tests in browser";
+    echo "";
+    echo "    jasmine init                  - include jasmine in the project";
+    echo "    jasmine create \$FunctionName  - creates ./src/FunctionName.js ./spec/FunctionNameSpec.js";
+    echo "    jasmine run                   - runs tests in browser";
 }
 
 if [ $1 ] 
