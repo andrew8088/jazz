@@ -29,6 +29,12 @@ if [ $1 ]
         then 
           echo "function $2 () {\n\n}" > ./src/$2.js
           echo "describe('$2', function () {\n\n});" > ./spec/$2Spec.js
+	  sed -i '' "12 a\\
+		<!-- $2 Source and Spec --> \\
+		<script src='src/$2.js'></script> \\
+		<script src='spec/$2Spec.js'></script> \\
+		\\
+		" SpecRunner.html
         else
           echo 'please add a name for the file'
       fi
