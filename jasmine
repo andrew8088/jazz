@@ -22,6 +22,7 @@ if [ $1 ]
         then
         xattr -d -r com.apple.quarantine ./SpecRunner.html
       fi
+      sed -i '' '13,19d' SpecRunner.html
     ;;
     "create")
       if [ $2 ]
