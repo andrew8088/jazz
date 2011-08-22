@@ -1,11 +1,11 @@
 #! /bin/sh
 
 function help {
-    echo "jasmine - a few commands to help you includes the jasmine JavaScript testing library in your project";
+    echo "jazz - a few commands to help you includes the jasmine JavaScript testing library in your project";
     echo "";
-    echo "    jasmine init                  - include jasmine in the project";
-    echo "    jasmine create \$FunctionName  - creates ./src/FunctionName.js ./spec/FunctionNameSpec.js";
-    echo "    jasmine run                   - runs tests in browser";
+    echo "    jazz init                  - include jasmine in the project";
+    echo "    jazz create \$FunctionName  - creates ./src/FunctionName.js ./spec/FunctionNameSpec.js";
+    echo "    jazz run                   - runs tests in browser";
 }
 
 if [ $1 ] 
