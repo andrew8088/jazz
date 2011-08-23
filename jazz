@@ -24,19 +24,21 @@ if [ $1 ]
         then
           xattr -d -r com.apple.quarantine ./SpecRunner.html
       fi
-      sed -i '' '13,19d' SpecRunner.html
+      sed '13,19d' SpecRunner.html > temp
+      mv temp SpecRunner.html
     ;;
     "create")
       if [ $2 ]
         then 
           echo "function $2 () {\n\n}" > ./src/$2.js
           echo "describe('$2', function () {\n\n});" > ./spec/$2Spec.js
-	  sed -i '' "12 a\\
-		<!-- $2 Source and Spec --> \\
-		<script src='src/$2.js'></script> \\
-		<script src='spec/$2Spec.js'></script> \\
-		\\
-		" SpecRunner.html
+          sed "12 a\\
+          <!-- $2 Source and Spec --> \\
+          <script src='src/$2.js'></script> \\
+          <script src='spec/$2Spec.js'></script> \\
+          \\
+          " SpecRunner.html > temp
+          mv temp SpecRunner.html
         else
           echo 'please add a name for the file'
       fi
