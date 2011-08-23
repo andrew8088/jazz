@@ -18,9 +18,11 @@ if [ $1 ]
       mv ./jasmine-standalone-1.1.0.rc1/lib/jasmine-1.1.0.rc1 ./lib
       mv ./jasmine-standalone-1.1.0.rc1/SpecRunner.html ./SpecRunner.html
       rm -rf ./jasmine-standalone-1.1.0 ./jasmine-standalone-1.1.0.rc1 ./jasmine-standalone-1.1.0.rc1.zip
-      if [ xattr ]
+      
+      hash xattr &> /dev/null
+      if [ $? -eq 0 ]
         then
-        xattr -d -r com.apple.quarantine ./SpecRunner.html
+          xattr -d -r com.apple.quarantine ./SpecRunner.html
       fi
       sed -i '' '13,19d' SpecRunner.html
     ;;
