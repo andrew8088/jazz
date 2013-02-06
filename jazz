@@ -1,58 +1,63 @@
 #! /bin/sh
 
-function help {
+function help () {
     echo "jazz - A simple script that makes using the Jasmine testing framework in a standalone project a little simpler."
-    echo "";
+    echo ""
     echo "    jazz init                  - include jasmine in the project";
-    echo "    jazz create \$FunctionName  - creates ./src/FunctionName.js ./spec/FunctionNameSpec.js";
+    echo "    jazz create FunctionName   - creates ./src/FunctionName.js ./spec/FunctionNameSpec.js";
     echo "    jazz run                   - runs tests in browser";
 }
 
+JASMIME_LINK="http://cloud.github.com/downloads/pivotal/jasmine/jasmine-standalone-1.3.1.zip"
+
 if [ $1 ] 
-  then
-    case "$1" in
-    "init")
-      curl -O http://pivotal.github.com/jasmine/downloads/jasmine-standalone-1.1.0.rc1.zip
-      unzip jasmine-standalone-1.1.0.rc1.zip
-      mkdir lib spec src
-      mv ./jasmine-standalone-1.1.0.rc1/lib/jasmine-1.1.0.rc1 ./lib
-      mv ./jasmine-standalone-1.1.0.rc1/SpecRunner.html ./SpecRunner.html
-      rm -rf ./jasmine-standalone-1.1.0 ./jasmine-standalone-1.1.0.rc1 ./jasmine-standalone-1.1.0.rc1.zip
-      
-      hash xattr &> /dev/null
-      if [ $? -eq 0 ]
-        then
-          xattr -d -r com.apple.quarantine ./SpecRunner.html
-      fi
-      sed '13,19d' SpecRunner.html > temp
-      mv temp SpecRunner.html
-    ;;
-    "create")
-      if [ $2 ]
-        then 
-          echo "function $2 () {\n\n}" > ./src/$2.js
-          echo "describe('$2', function () {\n\n});" > ./spec/$2Spec.js
-          sed "12 a\\
-          <!-- $2 Source and Spec --> \\
-          <script src='src/$2.js'></script> \\
-          <script src='spec/$2Spec.js'></script> \\
-          \\
-          " SpecRunner.html > temp
-          mv temp SpecRunner.html
-        else
-          echo 'please add a name for the file'
-      fi
-    ;;
-    "run")
+then
+  case "$1" in
+  "init")
+    echo "Downloading Jasmine . . ."
+    curl -sO $JASMIME_LINK 
+    unzip -q `basename $JASMIME_LINK` 
+    rm `basename $JASMIME_LINK` src/*.js spec/*.js
+    
+    if which xattr > /dev/null && [ "`xattr SpecRunner.html`" = "com.apple.quarantine" ]
+    then
+      xattr -d com.apple.quarantine SpecRunner.html
+    fi
+
+    sed -i "" "12,18d" SpecRunner.html
+    echo "Jasmine initialized!"
+  ;;
+  "create")
+    if [ $2 ]
+    then 
+      echo "function $2 () {\n\n}" > ./src/$2.js
+      #echo "var $2 = (function () {\n\tvar $2Prototype = {\n\n\t};\n\n\treturn {\n\t\tcreate : function (attrs) {\n\t\t\tvar o = Object.create($2Prototype);\n\t\t\textend(o, attrs);\n\t\t\treturn o;\n\t\t}\n \t};\n}());" > src/$2.js
+      echo "describe('$2', function () {\nit('runs');\n});" > ./spec/$2Spec.js
+      sed -i "" "11a\\
+      <script src='src/$2.js'></script>\\
+      <script src='spec/$2Spec.js'></script>
+      " SpecRunner.html
+      echo "Created:"
+      echo "\t- src/$2.js"
+      echo "\t- spec/$2Spec.js"
+      echo "Edited:"
+      echo "\t- SpecRunner.html"
+    else
+      echo 'please add a name for the file'
+    fi
+  ;;
+  "run")
+    if [ "`which open`" = '/usr/bin/open' ] 
+    then
       open ./SpecRunner.html
-    ;;
-    "--help")
-      help;
-    ;;
-    *)
-      help;
-    ;;
-    esac
-  else
+    else
+      echo "Please open SpecRunner.html in your browser"
+    fi
+  ;;
+  *)
     help;
+  ;;
+  esac
+else
+  help;
 fi
